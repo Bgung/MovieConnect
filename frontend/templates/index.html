@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개인 홈페이지</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/">홈</a>
+            <a href="/movie">영화 추천</a>
+            <a href="/projects">개인 프로젝트</a>
+            <a href="/contact">연락처</a>
+        </nav>
+    </header>
+    <main>
+        <section id="about">
+            <h2>소개</h2>
+            <p>안녕하세요! 저는 [이름]이고, 이곳은 제 개인 홈페이지입니다.</p>
+        </section>
+        <section id="projects">
+            <h2>프로젝트</h2>
+            <ul>
+                <li>프로젝트 1</li>
+                <li>프로젝트 2</li>
+                <li>프로젝트 3</li>
+            </ul>
+        </section>
+        <section id="contact">
+            <h2>연락처</h2>
+            <p>이메일: example@example.com</p>
+        </section>
+    </main>
+    <aside class="side-nav">
+        <ul>
+            <li><a href="#about">소개</a></li>
+            <li><a href="#projects">프로젝트</a></li>
+            <li><a href="#contact">연락처</a></li>
+        </ul>
+    </aside>
+    <footer>
+        <p>&copy; 2024 개인 홈페이지. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

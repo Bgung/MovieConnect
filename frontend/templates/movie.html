@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+    <head>
+        <title>Movie Site</title>
+    </head>
+    <body>
+
+    {% if data %}
+    <ul>
+        {% for item in data %}
+        <li>Name: {{ item['name'] }} Year: {{ item['year'] }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+</html>
