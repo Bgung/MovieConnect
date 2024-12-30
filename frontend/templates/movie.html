@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<html>
-    <head>
-        <title>Movie Site</title>
-    </head>
+<html lang="ko-KR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+    <title>Movie Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/index.js') }}" defer></script>
+</head>
     <body>
 
-    {% if data %}
-    <ul>
-        {% for item in data %}
-        <li>Name: {{ item['name'] }} Year: {{ item['year'] }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+        <h1>Movie Site</h1>
+        <p>영화 추천 사이트입니다.</p>
+        <p>영화를 추천받고 싶다면 아래 버튼을 클릭하세요.</p>
+        <a href="/movie/recommend">영화 추천받기</a>
+
+    </body>
 
 </html>
