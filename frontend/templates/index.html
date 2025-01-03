@@ -3,60 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
-    <title>개인 홈페이지</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>채찍피티 & 잼민이 & 김민재가 함께 만든 홈 페이지</title>
+    <!-- Insert logo -->
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.png') }}">
+    <!-- Insert favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
     <script src="{{ url_for('static', filename='js/index.js') }}" defer></script>
+    <!-- LaTex 해석을 위한 MathJAX 설정 -->
+    <!-- https://docs.mathjax.org/en/latest/web/configuration.html -->
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
 </head>
 <body>
     <header>
+        <h1>채찍피티 & 잼민이와 함께 만드는 토이 프로젝트</h1>
         <nav>
-            <a href="/">홈</a>
-            <a href="/board">게시판</a>
-            <a href="/movie">영화 추천</a>
-            <a href="/projects">개인 프로젝트</a>
-            <a href="/contact">연락처</a>
+            <ul>
+                <li><a href="/">홈</a></li>
+                <li><a href="/board">게시물</a></li>
+                <li><a href="/movies">영화 추천</a></li>
+                <li><a href="/login">로그인</a></li>
+            </ul>
         </nav>
-        <div class="hamburger" aria-label="Toggle Navigation" >
-            &#9776;
-        </div>
     </header>
+
     <main>
-        <section id="about">
-            <h2>About me</h2>
-            <p>김민재</p>
-            <p id="about_li"></p>
+        <section id="introduce_page">
+            <h2>채찍피티 & 잼민이 & 김민재가 함께 만든 홈 페이지</h2>
+            <p>이 홈 페이지는 김민재, 채찍피티(ChatGPT), 잼민이(Gemini)가 만든 홈 페이지 입니다.</p>
         </section>
-        <section id="introduce">
-            <h2>소개</h2>
-            <p>안녕하세요.</p>
-        </section>
-        <section id="education">
-            <h2>학력</h2>
-            <ul>
-                <li>초등학교: 남부초등학교</li>
-                <li>중학교: 남서울중학교</li>
-                <li>고등학교: 성보고등학교</li>
-            </ul>
-            <p id="education_li"></p>
-        </section>
-        <section id="publication">
-            <h2>Publications</h2>
-            <ul>
-                <li>김민재 ~~~ 2024</li>
-                <li>김민재 ~~~ 2025</li>
-            </ul>
-            <p id="publication_li"></p>
+
+        <section id="introduce_me">
+            <div id="markdown_content">
+                <div id="markdown-content">
+                    {{ markdown_content | safe }} {# Flask에서 렌더링된 HTML을 삽입합니다. #}
+                </div>
+            </div>
         </section>
     </main>
 
-    <aside class="side-nav hidden" role="navigation" aria-label="Section Navigation">
-        <ul>
-            <li><a href="#about" title="about">About me</a></li>
-            <li><a href="#introduce" title="소개 섹션으로 이동">Introduce</a></li>
-            <li><a href="#education" title="학력 섹션으로 이동">Education</a></li>
-            <li><a href="#publication" title="출판 섹션으로 이동">Publication</a></li>
-        </ul>
-    </aside>
     <footer>
         <p>&copy; Minjae Kim All Rights Reserved.</p>
     </footer>

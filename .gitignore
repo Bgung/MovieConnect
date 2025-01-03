@@ -171,3 +171,11 @@ cython_debug/
 .pypirc
 
 database/
+
+.env*
+*.log*
+
+# Certbot
+certbot/conf/
+certbot/data/
+certbot/logs/

@@ -1,45 +1,86 @@
 version: "3.9"
 
 services:
+    
   frontend:
     build: ./frontend
     container_name: web-server
+    hostname: web-server
     volumes:
       - ./frontend:/app
-    ports:
-      - "5000:5000"
-
-  # backend:
-  #   build: ./backend
-  #   container_name: api-server
-  #   volumes:
-  #     - ./backend:/app
-  #   ports:
-  #     - "5000:5000"
-  #   depends_on:
-  #     - mysql
-  #     - mongodb
-  #   networks:
-  #     - movieconnect
+    restart: unless-stopped
+    networks:
+      - back-tier
+      
+  backend:
+    env_file:
+      - .env/.base.dev
+    build: ./backend
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - mysql
+      - mongodb
+    restart: unless-stopped
+    scale: 3
+    networks:
+      - back-tier
 
   mysql: # 유저 정보 등
     image: mysql:latest
     container_name: mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=secret
-      - MYSQL_DATABASE=movies
+    env_file:
+      - .env/.mysql.dev
     volumes:
       - ./database/mysql_data:/var/lib/mysql
-    ports:
-      - "3307:3307"
+    restart: unless-stopped
+    networks:
+      - back-tier
 
   mongodb: # 게시물 정보 등
     image: mongo:latest
     container_name: mongodb
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=secret
+    env_file:
+      - .env/.mongodb.dev
     volumes:
       - ./database/mongodb_data:/data/db
+    restart: unless-stopped
+    networks:
+      - back-tier
+
+  api-gateway:
+    image: nginx:latest
+    container_name: api-gateway
+    volumes:
+      - ./gateway:/etc/nginx/
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/data:/var/www/certbot
     ports:
-      - "27017:27017"
+      - "80:80"
+      - "443:443"
+      - "9090:9090" # for test while developing
+    depends_on:
+      - frontend
+      - backend
+    restart: unless-stopped
+    networks:
+      - front-tier
+      - back-tier
+
+  certbot:
+    env_file:
+      - .env/.certbot.env
+    build: ./certbot
+    volumes:
+        - ./certbot/conf:/etc/letsencrypt
+        - ./certbot/logs:/var/log/letsencrypt
+        - ./certbot/data:/var/www/certbot
+    depends_on:
+      - api-gateway
+    networks:
+      - front-tier
+
+networks:
+  front-tier:
+  back-tier:
+    internal: true
